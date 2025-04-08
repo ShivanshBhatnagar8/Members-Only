@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="messages-container">
+      <% messages.forEach((message) => { %>
+      <div class="message-box">
+        <h2 class="title"><%= message.title %></h2>
+        <p class="message"><%= message.message %></p>
+        <P class="name"><%= message.user_name %></P>
+        <p class="time"><%= message.timestamp.toLocaleDateString() %></p>
+        <% if (user.isadmin) {%>
+        <button id="<%= message.id%>" class="delete-btn">Delete</button>
+        <% }%>
+      </div>
+      <% }); %>
+    </div>
+    <p class="error"></p>
+    <script>
+      const deleteButton = document.querySelectorAll(".delete-btn");
+      const errorMessage = document.querySelector(".error");
+
+      async function deleteMessage(id) {
+        return await fetch("http://localhost:3000/messages/delete", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messageId: id,
+          }),
+        });
+      }
+
+      deleteButton.forEach((el) => {
+        el.addEventListener("click", function (e) {
+          console.log(e.target.id);
+          deleteMessage(e.target.id)
+            .then((response) => {
+              console.log(response);
+              if (response) {
+                location.reload();
+              }
+            })
+            .catch((error) => {
+              error.textContent = "Something Went wrong !";
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

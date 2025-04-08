@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../style.css" />
+    <title>Members-Only</title>
+  </head>
+  <body>
+    <div class="container">
+      <% if (locals.user) {%>
+      <div class="nav-bar">
+        <h1>WELCOME <%= user.first_name%></h1>
+        <a class="logout-btn" href="/log-out">LOG OUT</a>
+      </div>
+      <div><%- include('../views/messageForm/', {user:user}); %></div>
+      <% } else { %>
+      <h1>please log in</h1>
+      <form action="/" method="POST">
+        <label for="username">User Name</label>
+        <input
+          id="username"
+          name="username"
+          placeholder="Email"
+          type="email"
+          required
+        />
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          maxlength="6"
+          required
+        />
+        <a href="/forgot-password">Forgot Password ?</a>
+        <button>Log In</button>
+        <p class="registration">
+          New Member? Register <a href="/sign-up">here.</a>
+        </p>
+        <% if (message!== undefined) {%>
+        <p class="error">Username or Password is incorrect !</p>
+        <% }%>
+      </form>
+      <%}%>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <title>Member Only</title>
+  </head>
+  <body>
+    <div class="form-container">
+      <form method="POST" action="/messages" class="message-form">
+        <h2>Enter your Message</h2>
+        <label for="title">Title:</label>
+        <input id="title" type="text" name="title" required maxlength="10" />
+        <label for="message">Enter Message:</label>
+        <input
+          id="message"
+          type="text"
+          name="message"
+          required
+          maxlength="50"
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <%- include('../views/messages/',{messages:messages},{user:user}); %>
+    </div>
+  </body>
+</html>
